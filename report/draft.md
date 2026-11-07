@@ -72,13 +72,30 @@ In short: reducing the conversation history saves tokens, but the AI could lose 
 ## B. The two techniques I would test first
 
 ### Technique 1: Retrieval tuning
-1. Why I chose it:
-2. How I would implement / evaluate it:
-3. Metrics:
-4. How I check that quality did not drop:
+**1. Why I chose it:** Because it helps retrieve the relevant, necessary information before it is given to the AI model. Retrieved passages are usually the biggest part of the input, so this is where the most tokens can be saved. <!-- new sentence -->
+
+**2. How I would implement / evaluate it:** I would compare the baseline agent with the optimized agent, using the same test questions, and compare tokens and answer quality. I would change one setting at a time (top-k, chunk size, similarity threshold) and choose the settings on a small set of dev questions before comparing on separate test questions. <!-- second sentence new -->
+
+**3. Metrics:** <!-- fixed: top-k and chunk size are settings, not metrics -->
+- Input tokens per request, taken from the API usage numbers.
+- Retrieval hit rate: whether the correct passage was retrieved.
+- Answer correctness.
+- Latency.
+
+**4. How I check that quality did not drop:** I compare the answers of the baseline and the optimized agent on the same questions. I check that the correct passage is still retrieved (hit rate), that the answer contains the key facts, and that a second model (a judge) marks it correct. I check part of the judge's marks by hand. <!-- rewritten: tokens are not a quality check -->
 
 ### Technique 2: Output control
-1. Why I chose it:
-2. How I would implement / evaluate it:
-3. Metrics:
-4. How I check that quality did not drop:
+**1. Why I chose it:** Because we can control the text the AI generates, by giving instructions for concise responses and by limiting the number of tokens. It reduces the output side of the request and is easy to test. <!-- second sentence new -->
+
+**2. How I would implement / evaluate it:** By asking the AI for concise answers in the instructions and by setting a maximum token limit (`max_tokens`). I would compare it with the baseline on the same questions. <!-- fixed: prompt caching and compaction belong to technique 3 -->
+
+**3. Metrics:**
+- Number of generated (output) tokens per answer, taken from the API usage numbers.
+- Number of answers cut off by the token limit. <!-- new -->
+- Latency. <!-- new -->
+
+**4. How I check that quality did not drop:** Shorter answers could leave out important facts or be cut off. I check this with the same key-fact check and judge as for retrieval tuning, and by counting the answers that stopped because of the token limit. <!-- suggested: you answered "I don't know", edit in your own words -->
+
+### Decision rule (written before running the experiment) <!-- new -->
+A change is accepted when tokens drop by at least 30% and at most one of the 12 test questions gets worse.
+
