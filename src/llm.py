@@ -14,7 +14,7 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 CACHE_DIR = Path(__file__).parent.parent / "results" / "cache"
 
 
-def ask(messages, model, max_tokens=None, temp=0):
+def ask(messages, model, max_tokens=None, temp=0, reasoning_effort=None):
     # API parameters
     options = {
         "model": model,
@@ -26,12 +26,17 @@ def ask(messages, model, max_tokens=None, temp=0):
     if max_tokens is not None:
         options["max_tokens"] = max_tokens
 
+    # Reasoning effort (only for models that support it)
+    if reasoning_effort is not None:
+        options["reasoning_effort"] = reasoning_effort
+
     key_source = json.dumps(
         {
             "model": model,
             "messages": messages,
             "max_tokens": max_tokens,
             "temperature": temp,
+            "reasoning_effort": reasoning_effort,
         },
         sort_keys=True,
     )
@@ -53,7 +58,7 @@ def ask(messages, model, max_tokens=None, temp=0):
         except RateLimitError:
             if attempt == 3:
                 raise
-            time.sleep(2 ** attempt)   # waits 1s, 2s, 4s
+            time.sleep(20 * (attempt + 1))   # waits 20s, 40s, 60s
 
     # store de results in a dictionary
     result = {
@@ -74,5 +79,5 @@ def ask(messages, model, max_tokens=None, temp=0):
 if __name__ == "__main__":
     MODEL = "openai/gpt-oss-20b"
     msgs = [{"role": "user", "content": "What is 2+2?"}]
-    print(ask(msgs, MODEL, max_tokens=300))
-    print(ask(msgs, MODEL, max_tokens=300))
+    print(ask(msgs, MODEL, max_tokens=300, reasoning_effort="low"))
+    print(ask(msgs, MODEL, max_tokens=300, reasoning_effort="low"))
