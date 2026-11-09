@@ -1,0 +1,165 @@
+{
+  "answered_without_docs": [
+    "t1",
+    "t2"
+  ],
+  "needs_docs": [
+    "d1",
+    "d2",
+    "d3",
+    "d4",
+    "d5",
+    "d6",
+    "d7",
+    "t3",
+    "t4",
+    "t5",
+    "t6",
+    "t7",
+    "t8",
+    "t9",
+    "t10"
+  ],
+  "details": [
+    {
+      "id": "d1",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "The environment variable that disables CPython\u2019s built\u2011in remote\u2011debugging support is **`PYTHONDEBUG`** \u2013 set it to **`0`** (or leave it unset) to turn the feature off.",
+      "total_tokens": 277
+    },
+    {
+      "id": "d2",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "",
+      "total_tokens": 524
+    },
+    {
+      "id": "d3",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "The cross\u2011interpreter `Queue` (the one that works across Python processes or interpreters) does **not** provide the following `queue.Queue` methods:\n\n- `qsize()`\n- `empty()`\n- `full()`\n- `task_done()`\n- `join()`\n\nAll other standard `queue.Queue` methods (`put`, `put_nowait`, `get`, `get_nowait`, `get(block=\u2026)`, `put(block=\u2026)`, etc.) are implemented.",
+      "total_tokens": 295
+    },
+    {
+      "id": "d4",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "Use the `--enable-threads` and `--with-free-threaded` options when running `./configure` to build a free\u2011threaded CPython from source.",
+      "total_tokens": 234
+    },
+    {
+      "id": "d5",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "In a free\u2011threaded extension you should use **`PyList_GetItem()`** replaced by **`PyList_GetItem()`**? (I\u2019m sorry, I don\u2019t know the exact replacement.)",
+      "total_tokens": 453
+    },
+    {
+      "id": "d6",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "`asyncio.capture_call_graph()` returns an empty dictionary (`{}`) when you call it with no future argument and there is no current task.",
+      "total_tokens": 219
+    },
+    {
+      "id": "d7",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "In a free\u2011threaded (GIL\u2011free) build, importing a C extension that does **not** declare itself as free\u2011threading safe will normally crash or exhibit undefined behaviour, because the interpreter will assume the extension can run without the GIL and will not protect it.  \nIn a multi\u2011phase (PEP\u202f489) module, the slot that a C extension uses to declare that it supports free\u2011threading is the **`Py_mod_exec`** slot (the slot that performs the module\u2019s initialization).",
+      "total_tokens": 399
+    },
+    {
+      "id": "d8",
+      "answerable": false,
+      "correct_without_docs": false,
+      "answer": "In the free\u2011threaded CPython build an empty list occupies **48\u202fbytes** on a 64\u2011bit system.",
+      "total_tokens": 382
+    },
+    {
+      "id": "t1",
+      "answerable": true,
+      "correct_without_docs": true,
+      "answer": "You can disable the Yama ptrace restrictions globally by running:\n\n```bash\necho 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope\n```\n\nThis sets `ptrace_scope` to `0`, turning off the restrictions for all processes until the next reboot.",
+      "total_tokens": 284
+    },
+    {
+      "id": "t2",
+      "answerable": true,
+      "correct_without_docs": true,
+      "answer": "The binary must be signed with the **`com.apple.security.get-task-allow`** entitlement (set to `true`) so that it can be debugged on macOS.",
+      "total_tokens": 183
+    },
+    {
+      "id": "t3",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "In `multiprocessing.Queue`, a `maxsize` of **0** (or any negative value) means the queue has no size limit \u2013 it behaves as an unbounded queue.",
+      "total_tokens": 191
+    },
+    {
+      "id": "t4",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "The two built\u2011in types that share mutable data between separate Python interpreters (rather than making a copy) are **lists** and **dictionaries**.",
+      "total_tokens": 225
+    },
+    {
+      "id": "t5",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "I\u2019m not aware of a published figure for that specific metric.",
+      "total_tokens": 195
+    },
+    {
+      "id": "t6",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "The environment variable is **`MIMALLOC_MAX_FREE`** \u2013 setting it to a smaller value (or zero) causes mimalloc to return freed memory to the OS more quickly.",
+      "total_tokens": 268
+    },
+    {
+      "id": "t7",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "In Jinja2 (and similar templating engines), a `Template` object is a compiled representation of a template string, not a plain string. The `+` operator is defined only for string concatenation, so attempting to add a `Template` to a `str` raises a `TypeError`. You must render the template to a string first (e.g., `template.render(...)`) before concatenating.",
+      "total_tokens": 218
+    },
+    {
+      "id": "t8",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "The wrapper for the Zstandard library in the compression package is the `zstandard` module.",
+      "total_tokens": 153
+    },
+    {
+      "id": "t9",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "The GIL was removed in CPython\u202f3.7, so from that release on the multiple interpreters that can be created with `Py_NewInterpreter()` no longer share a single global lock.  To build CPython with the GIL disabled you pass the configure flag `--with-threads` (or more",
+      "total_tokens": 529
+    },
+    {
+      "id": "t10",
+      "answerable": true,
+      "correct_without_docs": false,
+      "answer": "You can force a free\u2011threaded build to run with the GIL by explicitly initializing the GIL at startup (for example, by calling `PyEval_InitThreads()` or by setting the `PYTHONUNBUFFERED` environment variable to enable the GIL). Once the interpreter is running you can query whether the GIL is actually disabled with the helper function `PyGILState_Check()`, which returns non\u2011zero only when the GIL is active.",
+      "total_tokens": 513
+    },
+    {
+      "id": "t11",
+      "answerable": false,
+      "correct_without_docs": false,
+      "answer": "In CPython you can create multiple sub\u2011interpreters in a single process using `Py_NewInterpreter()`, but there is no hard\u2011coded upper bound\u2014 the limit is effectively set only by available memory and the operating system\u2019s resource limits.",
+      "total_tokens": 220
+    },
+    {
+      "id": "t12",
+      "answerable": false,
+      "correct_without_docs": false,
+      "answer": "The free\u2011threaded build of Python requires a Linux kernel **5.10 or newer**.",
+      "total_tokens": 191
+    }
+  ]
+}

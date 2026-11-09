@@ -1,10 +1,16 @@
-### AI tools used
+# AI tools used
 
-## Tool used for assistance was Claude (as my code reviewer & tutor for new concepts)
+I used two AI assistants for this exercise: **Claude** (Anthropic) and **ChatGPT** (OpenAI).
 
-- Planning: helped plan the exercise (techniques, experiment design).
-- Code review and debugging: reviewed my code and helped fix small issues
-- Explanations: explained concepts (caching, reasoning tokens, Fix grammar and make the style consistent and professional. for my report)
-  so I can explain them myself.
-- Code examples: gave examples for the cache and retry parts of llm.py,
-  which I used and studied.
+## How I used them
+
+- **Planning:** Claude helped plan the exercise: which techniques to describe, which two to test the experiment design and the schedule.
+- **Explanations:** Claude and ChatGPT explained concepts (tokens, caching, chunking, top-k, reasoning tokens, LLM judges) so that I can explain them myself, Since i wasn't familiar with this.
+- **Code:** I wrote the codes ` src/` and in some of the ` tests/`(API call, token counts, latency). Claude reviewed it, helped fix it, and gave better solution or approaches.
+- **Data:** Claude drafted the 20 questions in `data/questions.jsonl` from those pages i found. A test checks that every evidence phrase exists in the pages.
+- **Report:** I wrote the notes for Sections A and B in my own words. Claude fixed grammar and added some sentences, which I reviewed and kept or changed.
+
+## How I checked the work
+
+- The tests in `tests/` all pass (`python -m pytest`).
+- Token counts come from the API's `usage` fields, not from my own counting.

@@ -1,0 +1,5 @@
+{
+  "chunk_words": 100,
+  "top_k": 4,
+  "threshold": 0.0
+}

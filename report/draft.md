@@ -82,7 +82,7 @@ In short: reducing the conversation history saves tokens, but the AI could lose 
 - Answer correctness.
 - Latency.
 
-**4. How I check that quality did not drop:** I compare the answers of the baseline and the optimized agent on the same questions. I check that the correct passage is still retrieved (hit rate), that the answer contains the key facts, and that a second model (a judge) marks it correct. I check part of the judge's marks by hand. <!-- rewritten: tokens are not a quality check -->
+**4. How I check that quality did not drop:** I compare the answers of the baseline and the optimized agent on the same questions. I check that the correct passage is still retrieved (hit rate), that the answer contains the key facts, and that a second model (a judge) marks it correct. <!-- rewritten: tokens are not a quality check -->
 
 ### Technique 2: Output control
 **1. Why I chose it:** Because we can control the text the AI generates, by giving instructions for concise responses and by limiting the number of tokens. It reduces the output side of the request and is easy to test. <!-- second sentence new -->
@@ -99,3 +99,39 @@ In short: reducing the conversation history saves tokens, but the AI could lose 
 ### Decision rule (written before running the experiment) <!-- new -->
 A change is accepted when tokens drop by at least 30% and at most one of the 12 test questions gets worse.
 
+
+## C. Experiment
+
+### Setup
+Agent: a small question answering agent over 7 pages of the official Python 3.14 documentation (newer than the model's training data). Baseline: chunks of 300 words, top-8 passages, normal instructions. Variant A: retrieval tuning (100-word chunks, top-4, chosen on 8 dev questions). Variant B: output control (answer in at most two sentences, max_tokens 300). Variant A+B: both. Retrieval is TF-IDF with cosine similarity (not embeddings, to keep it simple and fast). Answer model: openai/gpt-oss-20b on Groq, judge: qwen/qwen3.8-27b (a different model family). 20 questions: 8 dev (used to choose settings) and 12 test (used for the results), including 3 multi-passage and 3 unanswerable ones.
+
+### What I measured
+Prompt, completion and total tokens from the API usage numbers, retrieval hit rate (is the evidence in the retrieved text), answer correctness (key-fact rule check and the judge), answers cut off, latency. Decision rule written before the run: accept when tokens drop at least 30% and at most 1 of 12 questions gets worse.
+
+### Results (12 test questions, one run each)
+| variant | avg total tokens | vs baseline | avg output tokens | hit rate | correct (judge) |
+|---|---|---|---|---|---|
+| baseline | 3380 | 0% | 84 | 10/10 | 12/12 |
+| A retrieval | 720 | -79% | 77 | 9/10 | 11/12 |
+| B output | 3368 | -0.4% | 59 | 10/10 | 12/12 |
+| A+B | 714 | -79% | 59 | 9/10 | 11/12 |
+
+No answer was cut off. Latency went from 0.6 s to 0.3 s with A.
+
+### Lessons learned
+- About 97% of the tokens are input, so retrieval tuning matters much more than output control. B cut output tokens by about 30%, but total tokens barely changed. By my rule A and A+B pass (at the limit) and B fails on total tokens. B could still matter for cost, since output tokens are usually priced higher, but I did not measure cost.
+- The one answer A lost (a question needing two passages) happened because one passage was not retrieved and the model gave a wrong answer instead of saying it did not know.
+- The similarity threshold had no effect on this data.
+- Without the documents the model made up answers on unanswerable questions, and two questions (t1, t2) were already known to it, so I checked this before trusting the results.
+- My first rule check was too strict ("8 %" vs "8%", different "not in the documents" wordings). The judge was right each time, so I fixed the rule check and it now agrees with the judge on all 48 answers.
+- Reasoning tokens count as output, so a "be concise" instruction does not remove them.
+
+### Limits
+12 test questions and one run each, so a difference of one question is not strong evidence. Settings for A were chosen on only 7 answerable dev questions. TF-IDF instead of embeddings. One answer model. The judge is a model too. The documentation was fetched with an AI-assisted tool.
+
+## D. References
+- Lewis et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.
+- Liu et al. (2023). Lost in the Middle: How Language Models Use Long Contexts.
+- Zheng et al. (2023). Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena.
+- Groq API documentation (usage fields, rate limits, reasoning_effort), console.groq.com/docs.
+- Python 3.14 documentation, docs.python.org/3.14 (the 7 pages in data/docs).

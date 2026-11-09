@@ -1,0 +1,86 @@
+variant,id,question,gold_answer,answer,rule_pass,judge_pass,human_pass
+baseline,t1,Which command turns off the ptrace restrictions for all processes on Linux until the next reboot?,echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope,"The command that turns off ptrace restrictions for all processes on Linux until the next reboot is:
+
+```bash
+echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+```
+",True,True,
+baseline,t2,Which entitlement has to be added to the Python binary on macOS so that it can be debugged?,com.apple.security.get-task-allow,"The entitlement that must be added to the Python binary on macOS is:
+
+```
+com.apple.security.get-task-allow
+```
+
+This entitlement, when set to `true`, allows the binary to be debugged.",True,True,
+baseline,t3,What happens when the maxsize argument of create_queue() is zero or negative?,The queue size is infinite.,"When you call `concurrent.interpreters.create_queue(maxsize=0)` (or pass any negative value), the queue is created with an **infinite** capacity. In other words, the queue will never block on `put()` because its size limit is effectively unlimited.",True,True,
+baseline,t4,Which two types share mutable data between interpreters instead of copying it?,memoryview and Queue.,"The two types that actually share mutable data between interpreters (instead of being copied) are:
+
+1. `memoryview`  
+2. `Queue` (the cross‑interpreter queue provided by `concurrent.interpreters.create_queue()`)
+
+These are the only Python types mentioned in the documentation that share mutable data across interpreters.",True,True,
+baseline,t5,What is the average single-threaded overhead of the free-threaded build on x86-64 Linux on the pyperformance benchmark suite?,About 8%.,The pyperformance benchmark suite shows that the free‑threaded build incurs an average single‑threaded overhead of **about 8 % on x86‑64 Linux**.,True,True,
+baseline,t6,Which environment variable can reduce the delay before the mimalloc allocator returns freed memory to the operating system?,"MIMALLOC_PURGE_DELAY, set to 0.",The environment variable is `MIMALLOC_PURGE_DELAY`.,True,True,
+baseline,t7,Why can a Template not be concatenated directly with a plain str using the + operator?,It is unclear whether the string should be treated as a static string or as an interpolation.,"A `Template` cannot be concatenated directly with a plain `str` using the `+` operator because the language cannot determine whether the plain string should be treated as a **static literal** part of the template or as a **dynamic interpolation**. The `+` operator is only defined for combining two `Template` objects, so mixing a `Template` with a raw `str` would be ambiguous. To concatenate a `Template` with a string, you must wrap the string in a `Template` (to treat it as static) or use an `Interpolation` (to treat it as dynamic).",True,True,
+baseline,t8,Which module in the compression package is the wrapper for the Zstandard library?,compression.zstd,The wrapper for the Zstandard compression library is provided by the `compression.zstd` module.,True,True,
+baseline,t9,"Since which Python version do multiple interpreters not share the GIL, and which configure option builds CPython with the GIL disabled?",Since Python 3.12; the --disable-gil configure option.,"Multiple interpreters do **not share the GIL** starting with **Python 3.12**.  
+To build CPython with the GIL disabled you use the configure option **`--disable-gil`**.",True,True,
+baseline,t10,"How can you make a free-threaded build run with the GIL enabled, and which function tells you whether the GIL is actually disabled in the running process?",Set the PYTHON_GIL environment variable (or use -X gil); sys._is_gil_enabled() checks it.,"You can enable the GIL in a free‑threaded build by either setting the environment variable `PYTHON_GIL` or by passing the command‑line option `-X gil` when starting Python.  
+
+To check whether the GIL is actually disabled in the running process, use the built‑in function `sys._is_gil_enabled()`. If it returns `False`, the GIL is disabled; if it returns `True`, the GIL is enabled.",True,True,
+baseline,t11,What is the maximum number of interpreters that one process can create?,Not in the documents.,The passages provided do not contain information about the maximum number of interpreters that a single process can create.,True,True,
+baseline,t12,Which Linux kernel version is required to run the free-threaded build?,Not in the documents.,The provided passages do not contain any information about a required Linux kernel version for running the free‑threaded build.,True,True,
+A,t1,Which command turns off the ptrace restrictions for all processes on Linux until the next reboot?,echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope,"The command is:
+
+```bash
+echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+```
+
+This disables ptrace restrictions for all processes until the next reboot.",True,True,
+A,t2,Which entitlement has to be added to the Python binary on macOS so that it can be debugged?,com.apple.security.get-task-allow,"The entitlement that must be added to the Python binary on macOS is:
+
+```
+com.apple.security.get-task-allow
+```
+
+This entitlement enables the binary to be debugged.",True,True,
+A,t3,What happens when the maxsize argument of create_queue() is zero or negative?,The queue size is infinite.,"When you call `concurrent.interpreters.create_queue(maxsize=0)` (or pass a negative value), the queue is created with an **infinite** capacity. In other words, the queue will never block on insertion because its size is effectively unlimited. This behavior is the same as when `maxsize` is less than or equal to zero.",True,True,
+A,t4,Which two types share mutable data between interpreters instead of copying it?,memoryview and Queue.,"The two types that share mutable data between interpreters (instead of being copied) are:
+
+- `memoryview`
+- `Queue`",True,True,
+A,t5,What is the average single-threaded overhead of the free-threaded build on x86-64 Linux on the pyperformance benchmark suite?,About 8%.,"The average single‑threaded overhead of the free‑threaded build on x86‑64 Linux, as reported by the pyperformance benchmark suite, is **about 8 %**.",True,True,
+A,t6,Which environment variable can reduce the delay before the mimalloc allocator returns freed memory to the operating system?,"MIMALLOC_PURGE_DELAY, set to 0.",The environment variable is `MIMALLOC_PURGE_DELAY`. Setting it to `0` reduces the delay before mimalloc returns freed memory to the operating system.,True,True,
+A,t7,Why can a Template not be concatenated directly with a plain str using the + operator?,It is unclear whether the string should be treated as a static string or as an interpolation.,"Because the library cannot determine whether a plain string should be treated as a static part of the template or as a dynamic interpolation. The `+` operator would therefore be ambiguous, so concatenating a `Template` with a plain `str` is not supported.",True,True,
+A,t8,Which module in the compression package is the wrapper for the Zstandard library?,compression.zstd,The wrapper for the Zstandard compression library is the `compression.zstd` module.,True,True,
+A,t9,"Since which Python version do multiple interpreters not share the GIL, and which configure option builds CPython with the GIL disabled?",Since Python 3.12; the --disable-gil configure option.,"Multiple interpreters do **not share the GIL starting with Python 3.12**.  
+To build CPython with the GIL disabled you use the configure option **`--disable-gil`**.",True,True,
+A,t10,"How can you make a free-threaded build run with the GIL enabled, and which function tells you whether the GIL is actually disabled in the running process?",Set the PYTHON_GIL environment variable (or use -X gil); sys._is_gil_enabled() checks it.,"You can force a free‑threaded build to run with the GIL enabled by importing an extension module that re‑enables the GIL at import time.  Importing such a module will raise a warning and automatically turn the GIL back on for the running interpreter.
+
+The function that tells you whether the GIL is actually disabled in the running process is **`sys._is_gil_enabled()`**.",False,False,
+A,t11,What is the maximum number of interpreters that one process can create?,Not in the documents.,The passages provided do not contain information about the maximum number of interpreters that a single process can create.,True,True,
+A,t12,Which Linux kernel version is required to run the free-threaded build?,Not in the documents.,The information about a required Linux kernel version is not present in the provided passages.,True,True,
+B,t1,Which command turns off the ptrace restrictions for all processes on Linux until the next reboot?,echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope,`echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope` turns off ptrace restrictions for all processes until the next reboot.,True,True,
+B,t2,Which entitlement has to be added to the Python binary on macOS so that it can be debugged?,com.apple.security.get-task-allow,The entitlement that must be added is `com.apple.security.get-task-allow` set to `true`.,True,True,
+B,t3,What happens when the maxsize argument of create_queue() is zero or negative?,The queue size is infinite.,"If *maxsize* is less than or equal to zero, the queue size is infinite.",True,True,
+B,t4,Which two types share mutable data between interpreters instead of copying it?,memoryview and Queue.,The two types that share mutable data between interpreters are `memoryview` and `Queue`.,True,True,
+B,t5,What is the average single-threaded overhead of the free-threaded build on x86-64 Linux on the pyperformance benchmark suite?,About 8%.,The pyperformance benchmark suite shows an average single‑threaded overhead of roughly **8 %** on x86‑64 Linux for the free‑threaded build.,True,True,
+B,t6,Which environment variable can reduce the delay before the mimalloc allocator returns freed memory to the operating system?,"MIMALLOC_PURGE_DELAY, set to 0.",The environment variable is `MIMALLOC_PURGE_DELAY`.,True,True,
+B,t7,Why can a Template not be concatenated directly with a plain str using the + operator?,It is unclear whether the string should be treated as a static string or as an interpolation.,A `Template` cannot be concatenated with a plain `str` using `+` because it would be ambiguous whether the `str` should be treated as a static literal part of the template or as a dynamic interpolation. The design therefore disallows `Template + str` and requires wrapping the string in a `Template` or an `Interpolation` instead.,True,True,
+B,t8,Which module in the compression package is the wrapper for the Zstandard library?,compression.zstd,The wrapper for the Zstandard library is `compression.zstd`.,True,True,
+B,t9,"Since which Python version do multiple interpreters not share the GIL, and which configure option builds CPython with the GIL disabled?",Since Python 3.12; the --disable-gil configure option.,"Multiple interpreters have not shared the GIL since Python 3.12, and CPython can be built with the GIL disabled by passing the `--disable-gil` configure option.",True,True,
+B,t10,"How can you make a free-threaded build run with the GIL enabled, and which function tells you whether the GIL is actually disabled in the running process?",Set the PYTHON_GIL environment variable (or use -X gil); sys._is_gil_enabled() checks it.,Use the `PYTHON_GIL` environment variable or the `-X gil` command‑line option to enable the GIL at runtime. The `sys._is_gil_enabled()` function tells you whether the GIL is actually disabled in the running process.,True,True,
+B,t11,What is the maximum number of interpreters that one process can create?,Not in the documents.,The documents do not specify a maximum number of interpreters that a single process can create.,True,True,
+B,t12,Which Linux kernel version is required to run the free-threaded build?,Not in the documents.,The information about a required Linux kernel version for running the free‑threaded build is not present in the provided passages.,True,True,
+A+B,t1,Which command turns off the ptrace restrictions for all processes on Linux until the next reboot?,echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope,`echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope` turns off the ptrace restrictions for all processes on Linux until the next reboot.,True,True,
+A+B,t2,Which entitlement has to be added to the Python binary on macOS so that it can be debugged?,com.apple.security.get-task-allow,The entitlement that must be added is `com.apple.security.get-task-allow`.,True,True,
+A+B,t3,What happens when the maxsize argument of create_queue() is zero or negative?,The queue size is infinite.,"If *maxsize* is zero or negative, the queue size is infinite, so `create_queue()` will create a cross‑interpreter queue with no upper bound on the number of items that can be placed in it.",True,True,
+A+B,t4,Which two types share mutable data between interpreters instead of copying it?,memoryview and Queue.,The two types that share mutable data between interpreters are `memoryview` and `Queue`.,True,True,
+A+B,t5,What is the average single-threaded overhead of the free-threaded build on x86-64 Linux on the pyperformance benchmark suite?,About 8%.,The average single‑threaded overhead on x86‑64 Linux is about **8 %** on the pyperformance benchmark suite.,True,True,
+A+B,t6,Which environment variable can reduce the delay before the mimalloc allocator returns freed memory to the operating system?,"MIMALLOC_PURGE_DELAY, set to 0.",The environment variable is `MIMALLOC_PURGE_DELAY`.,True,True,
+A+B,t7,Why can a Template not be concatenated directly with a plain str using the + operator?,It is unclear whether the string should be treated as a static string or as an interpolation.,"Concatenating a `Template` and a plain `str` is not supported because it is unclear whether the string should be treated as a static string or an interpolation. To combine them, wrap the string in a `Template` or use an `Interpolation`.",True,True,
+A+B,t8,Which module in the compression package is the wrapper for the Zstandard library?,compression.zstd,The wrapper for the Zstandard compression library is the `compression.zstd` module.,True,True,
+A+B,t9,"Since which Python version do multiple interpreters not share the GIL, and which configure option builds CPython with the GIL disabled?",Since Python 3.12; the --disable-gil configure option.,"Multiple interpreters do not share the GIL starting with Python 3.12, and CPython is built with the GIL disabled by using the `--disable-gil` configure option.",True,True,
+A+B,t10,"How can you make a free-threaded build run with the GIL enabled, and which function tells you whether the GIL is actually disabled in the running process?",Set the PYTHON_GIL environment variable (or use -X gil); sys._is_gil_enabled() checks it.,You can make a free‑threaded build run with the GIL enabled by importing an extension module that re‑enables the GIL (such modules automatically turn the GIL back on at import time). The function that tells you whether the GIL is actually disabled in the running process is `sys._is_gil_enabled()`.,False,False,
+A+B,t11,What is the maximum number of interpreters that one process can create?,Not in the documents.,The documents do not specify a maximum number of interpreters that a single process can create.,True,True,
+A+B,t12,Which Linux kernel version is required to run the free-threaded build?,Not in the documents.,The information is not in the documents.,True,True,
