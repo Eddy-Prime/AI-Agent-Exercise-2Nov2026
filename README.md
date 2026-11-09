@@ -54,4 +54,4 @@ AI_USAGE.md          how AI tools were used
 See `results/summary.md` and the report.
 
 ## Report
-The report is in `report/report.pdf` (source text: `report/draft.md`, built with `python report/build_pdf.py`).
+The report is in `report/Report.pdf` (source text: `report/draft.md`, built with `python report/build_pdf.py`).
